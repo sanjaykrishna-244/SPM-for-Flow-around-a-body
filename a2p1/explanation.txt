@@ -1,0 +1,38 @@
+The code SPM.py is the code for flow over cylinder model with these parameters:
+# ___ Parameters _____________________
+r      = 0.1        # cylinder radius
+n      = 8          # number of panels
+U_inf  = 1.5        # freestream speed
+alpha  = 0.0        # angle of attack (degrees)
+
+# These parameters sre used to calculate the geometry of the panels. 
+
+# Also to model the influence matrices to find the source stengths 
+of panels and velocity fields using the geometric integrals.
+
+# The geometric integrals evaluated explain the influence of each source panel on one another.
+
+# We use epsilon-eta approach to find the geometric integral values and form the influence matrix.
+
+# __ Log and Tan term generator _______________________
+def _ct_cl(eps1, eta, sj):
+    """tangential (Ct) and log (Cn) terms."""
+    eps2  = eps1 - sj
+    B = np.maximum(eps1**2 + eta**2, 1e-20)
+    Num = np.maximum(eps2**2 + eta**2, 1e-20)
+    Cl = (1/(2*np.pi)) * 0.5 * np.log(Num / B)
+    Ct = (1/(2*np.pi)) * (np.arctan2(eta, eps2) - np.arctan2(eta, eps1))
+    return Cl, Ct
+
+eps1 = dx cos(phi_j) + dy sin(phi_j) = -A
+eta  = -dx sin(phi_j) + dy cos(phi_j) = E
+B = eps1^2 + eta^2
+s_j^2 + 2 A S_j + B = eps2^2 + eta^2; eps2 = eps1 - s_j
+A + s_j = -eps1 + s_j = - eps2
+
+The outputs are:
+1) Snapshot of Cp_vs_theta
+2) Snapshot of Vt_vs_theta
+3) Snapshot of streamlines
+4) Excel sheets with panel geometry data and influence matrices
+5) u,v velocities at each grid points 
