@@ -171,7 +171,7 @@ ax.streamplot(X, Y, ug, vg,
               linewidth=1.0,
               color='steelblue',
               arrowsize=1.0,
-              integration_direction='forward',
+             integration_direction='forward',
               broken_streamlines=False,
               maxlength=100.0,
               minlength=0.0)
